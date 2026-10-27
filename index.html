@@ -70,16 +70,14 @@ button{font:inherit;color:inherit}
 #intro.out .env-panel{transform:translateY(102%)}
 #intro.out .env-liner{opacity:0}
 
-/* Portada azul y oro champagne aprobada.
-   Se desvanece al abrir, revelando el sobre animado original debajo. */
-.intro-premium-cover{position:absolute;inset:0;z-index:4;pointer-events:none;
-  background:#202b46 url("portada-sobre-rk.png") center center / contain no-repeat;
-  transition:opacity .6s ease,visibility .6s ease;
+/* Monograma RK sobre el sobre, sin quitar la animación original */
+.intro-monogram{position:absolute;left:50%;top:39%;z-index:4;pointer-events:none;
+  width:min(56vw,340px);height:auto;transform:translate(-50%,-50%);
+  filter:drop-shadow(0 8px 16px rgba(6,10,28,.38));transition:opacity .45s ease;
 }
-#intro.open .intro-premium-cover{opacity:0;visibility:hidden}
+#intro.open .intro-monogram{opacity:0}
 #intro .tap-hint{z-index:5;color:#e8d8b8;text-shadow:0 2px 8px #101b38}
-/* La imagen ya lleva el texto «Toca para abrir»; ocultar el duplicado. */
-#intro .tap-hint{visibility:hidden}
+@media (max-width:480px){.intro-monogram{width:min(62vw,320px);top:40.5%}}
 
 /* ========== PÁGINA ========== */
 .page{position:relative;margin:0 auto;background:var(--noise),var(--ivory);overflow:hidden}
@@ -281,7 +279,7 @@ footer p{font-family:var(--serif);font-size:18px;color:#cfc4dd;margin-top:6px}
   <div class="env-panel env-side r"></div>
   <div class="env-panel env-bottom"></div>
   <div class="env-flap"></div>
-  <div class="intro-premium-cover" aria-hidden="true"></div>
+  <img class="intro-monogram" src="monograma-rk-champagne.png" alt="Monograma R y K" aria-hidden="true">
   <p class="tap-hint">Toca para abrir</p>
 </div>
 
