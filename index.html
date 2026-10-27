@@ -268,6 +268,38 @@ footer p{font-family:var(--serif);font-size:18px;color:#cfc4dd;margin-top:6px}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.25s!important;transition-delay:0s!important}
   html{scroll-behavior:auto}
 }
+
+/* Ilustración original aprobada del lugar. Los botones visibles en la imagen
+   se corresponden con enlaces reales superpuestos, sin alterar el diseño. */
+
+
+/* ===== Blumen Garde · rediseño editorial ===== */
+.loc-art-sec{position:relative;isolation:isolate;padding:88px 22px 98px;background:radial-gradient(ellipse 90% 33% at 50% 52%,#f5eee5 0%,transparent 100%),#fbf8f2;overflow:hidden}
+.loc-art-sec::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;background-image:var(--noise);z-index:-1}
+.venue-layout{max-width:740px;margin:auto;position:relative;z-index:1}
+.venue-eyebrow{font-family:var(--sans);font-weight:500;color:#9b805d;font-size:11px;letter-spacing:.28em;text-transform:uppercase}
+.venue-heading{font-family:var(--serif);font-weight:500;color:#243256;font-size:clamp(44px,10vw,69px);line-height:1.01;letter-spacing:-.035em;margin:14px 0 20px}
+.venue-heading em{font-weight:400;color:#a5845d;font-style:italic}
+.venue-message{max-width:415px;margin:0 auto 30px;font-family:var(--serif);font-size:clamp(20px,5.4vw,24px);line-height:1.5;color:#66594d}
+.venue-illustration{position:relative;max-width:655px;margin:0 auto 20px;overflow:hidden;border-radius:4px;filter:drop-shadow(0 15px 22px rgba(49,45,57,.08))}
+.venue-illustration img{width:100%;height:auto;display:block;mix-blend-mode:multiply}
+.venue-hairline{width:44px;height:1px;background:#b99d73;margin:17px auto 22px}
+.venue-name{font-family:var(--serif);font-size:clamp(38px,9vw,54px);font-weight:500;color:#243256;line-height:1.02}
+.venue-sub{font-family:var(--serif);font-style:italic;color:#9a805f;font-size:19px;margin-top:3px}
+.venue-address{font-size:13px;letter-spacing:.065em;color:#6e6973;margin-top:12px}
+.venue-note{font-family:var(--serif);font-size:20px;color:#685e5b;margin:22px auto 8px;max-width:360px;line-height:1.4}
+.venue-actions{display:flex;align-items:stretch;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:27px}
+.venue-action{min-width:185px;min-height:56px;display:inline-flex;gap:11px;align-items:center;justify-content:center;padding:12px 23px;text-decoration:none;border-radius:5px;font:500 12px var(--sans);letter-spacing:.08em;transition:transform .25s,box-shadow .25s,background .25s}
+.venue-action svg{width:18px;height:18px;flex:none}
+.venue-action:hover{transform:translateY(-2px)}
+.venue-action.main{background:#233457;color:#fff;border:1px solid #233457;box-shadow:0 12px 25px -14px #233457}
+.venue-action.main:hover{background:#344971}
+.venue-action.alt{background:transparent;color:#243256;border:1px solid #baaa94}
+.venue-action.alt:hover{background:#f1e8db}
+.venue-leaf{position:absolute;width:155px;height:240px;color:#bd9a6f;fill:none;stroke:currentColor;stroke-width:1.1;opacity:.55;pointer-events:none;z-index:0}
+.venue-leaf.left{left:-75px;top:175px;transform:rotate(3deg)}
+.venue-leaf.right{right:-75px;bottom:95px;transform:scaleX(-1) rotate(8deg)}
+@media(max-width:500px){.loc-art-sec{padding:72px 17px 83px}.venue-actions{gap:10px;flex-direction:column;max-width:325px;margin:24px auto 0}.venue-action{width:100%}.venue-leaf{width:110px;opacity:.3}.venue-leaf.left{left:-55px;top:160px}.venue-leaf.right{right:-52px;bottom:85px}.venue-message{margin-bottom:24px}}
 </style>
 </head>
 <body class="locked">
@@ -367,29 +399,24 @@ footer p{font-family:var(--serif);font-size:18px;color:#cfc4dd;margin-top:6px}
     </div>
   </section>
 
-  <!-- ====== UBICACIÓN ====== -->
-  <section class="loc-sec" id="ubicacion">
-    <div class="wrap">
-      <p class="kicker reveal">Les esperamos en</p>
-      <h2 class="title reveal">Ubicación</h2>
-      <div class="arch reveal" id="arch" style="--d:.15s">
-        <svg viewBox="0 0 250 300" aria-hidden="true">
-          <circle cx="125" cy="150" r="88" fill="none" stroke="#fff" stroke-opacity=".55"/>
-          <circle cx="125" cy="150" r="60" fill="none" stroke="#fff" stroke-opacity=".75"/>
-          <circle cx="125" cy="150" r="34" fill="#fff" fill-opacity=".45"/>
-          <path d="M125 112c-15 0-26 11-26 25 0 19 26 45 26 45s26-26 26-45c0-14-11-25-26-25z" fill="#45306c"/>
-          <circle cx="125" cy="137" r="8.5" fill="#ece4f6"/>
-          <path d="M60 252c25-12 45-12 65 0s40 12 65 0" fill="none" stroke="#a8854f" stroke-width="1.2" opacity=".7"/>
-        </svg>
-      </div>
-      <p class="venue reveal" data-bind="lugar">Nombre del lugar</p>
-      <p class="address reveal" data-bind="direccion">Dirección del lugar</p>
-      <div class="btn-row reveal">
-        <a class="btn btn-primary" id="btnMaps" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          Ver ubicación
-        </a>
-        <a class="btn btn-ghost" id="btnWaze" target="_blank" rel="noopener">Abrir en Waze</a>
+  <!-- ====== UBICACIÓN: BLUMEN GARDE ====== -->
+  <section class="loc-sec loc-art-sec" id="ubicacion" aria-label="Ubicación de Blumen Garde">
+    <svg class="venue-leaf left" viewBox="0 0 140 240" aria-hidden="true"><path d="M9 230C35 174 32 115 73 18"/><path d="M27 183C3 153 13 126 39 114C43 140 44 159 27 183Z"/><path d="M39 141C83 140 94 110 94 81C66 85 48 104 39 141Z"/><path d="M53 99C32 71 39 43 59 28C67 56 67 79 53 99Z"/><path d="M67 48C95 55 115 37 123 12C94 9 76 25 67 48Z"/></svg><svg class="venue-leaf right" viewBox="0 0 140 240" aria-hidden="true"><path d="M9 230C35 174 32 115 73 18"/><path d="M27 183C3 153 13 126 39 114C43 140 44 159 27 183Z"/><path d="M39 141C83 140 94 110 94 81C66 85 48 104 39 141Z"/><path d="M53 99C32 71 39 43 59 28C67 56 67 79 53 99Z"/><path d="M67 48C95 55 115 37 123 12C94 9 76 25 67 48Z"/></svg>
+    <div class="venue-layout">
+      <p class="venue-eyebrow reveal">El lugar que elegimos</p>
+      <h2 class="venue-heading reveal">Nos vemos <em>allí</em></h2>
+      <p class="venue-message reveal">Nos hace mucha ilusión reunirnos en este lugar y compartir con ustedes un día que recordaremos siempre.</p>
+      <figure class="venue-illustration reveal">
+        <img src="blumen-garde-sin-hojas.webp" alt="Ilustración en acuarela de la entrada y fachada de Blumen Garde" loading="lazy">
+      </figure>
+      <div class="venue-hairline"></div>
+      <h3 class="venue-name reveal">Blumen Garde</h3>
+      <p class="venue-sub reveal">Rancho WG</p>
+      <p class="venue-address reveal">San Juan Chamelco · Alta Verapaz</p>
+      <p class="venue-note reveal">Aquí nos encontraremos para celebrar juntos.</p>
+      <div class="venue-actions reveal">
+        <a id="btnMaps" class="venue-action main" href="https://maps.app.goo.gl/KmdRzHkBSVE5tb4JA" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Cómo llegar <span aria-hidden="true">↗</span></a>
+        <a id="btnWaze" class="venue-action alt" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 16c0 2 1 3 3 3h11c2 0 3-1 3-3l-2-7c-.4-1.3-1-2-2.5-2h-9C6 7 5.4 7.7 5 9l-2 7z"/><path d="M6 14h12M7 19v2m10-2v2M7 10h10"/></svg>Abrir en Waze</a>
       </div>
     </div>
   </section>
@@ -519,7 +546,7 @@ const q = encodeURIComponent(`${CONFIG.lugar} ${CONFIG.direccion}`.trim());
 $$('[data-bind]').forEach(el => { const v = CONFIG[el.dataset.bind]; if (v) el.textContent = v; });
 $('#btnMaps').href = CONFIG.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${q}`;
 $('#btnWaze').href = CONFIG.wazeUrl || `https://waze.com/ul?q=${q}&navigate=yes`;
-if (CONFIG.fotoLugar) $('#arch').innerHTML = `<img src="${CONFIG.fotoLugar}" alt="${CONFIG.lugar}">`;
+// La ilustración de Blumen Garde ya se incluye como imagen fija en la sección.
 if (CONFIG.fotoPareja) $('#quotePhoto').style.backgroundImage = `url("${CONFIG.fotoPareja}")`;
 
 const gcal = new URL('https://calendar.google.com/calendar/render');
