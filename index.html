@@ -192,10 +192,9 @@ section{position:relative;padding:64px 26px;text-align:center}
 .time span{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink-soft)}
 
 /* Calendario estilo tarjeta con clip: letras finas, días en caligrafía, corazón a mano en el 8 */
-.cal{position:relative;margin:46px auto 0;max-width:380px;padding:34px 18px 26px;border-radius:22px;color:#ece3d2;
+.cal{position:relative;margin:40px auto 0;max-width:380px;padding:28px 18px 26px;border-radius:22px;color:#ece3d2;
   background:var(--noise),linear-gradient(155deg,var(--navy) 0%,#2a3068 55%,var(--purple-d) 100%);
   box-shadow:0 28px 50px -26px rgba(31,43,85,.7),inset 0 0 0 1px rgba(255,255,255,.06)}
-.cal-clip{position:absolute;left:30px;top:-24px;width:30px;height:64px;transform:rotate(-14deg);overflow:visible;filter:drop-shadow(1px 2px 1.5px rgba(10,10,30,.35))}
 .cal-head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 20px;line-height:1}
 .cal-head .mes{font-family:var(--serif);font-weight:300;font-size:clamp(26px,7.6vw,33px);letter-spacing:.14em;margin-right:-.14em;color:#f3ead8}
 .cal-head .aros{width:44px;height:24px;flex:none;overflow:visible}
@@ -253,6 +252,7 @@ section{position:relative;padding:64px 26px;text-align:center}
 .rings-sec{padding:0}
 .rings-stage{position:relative;width:min(100%,460px);aspect-ratio:1/.9;margin:-7% auto -6%}
 #ringsCanvas{position:relative;z-index:1;display:block;width:100%;height:100%}
+.rings-stage{z-index:5}
 
 /* --- Banda morada oscura con orillas de pincel rasgado (detalles + anillos) --- */
 .dark-band{position:relative;margin:76px 0 76px;color:#efe6d6;
@@ -268,17 +268,26 @@ section{position:relative;padding:64px 26px;text-align:center}
 .band-petals.top{top:calc(var(--bs)*-.7 - 32px)}
 .band-petals.bottom{bottom:calc(var(--bs)*-.7 - 32px)}
 .band-1{margin-top:calc(var(--bs)*.62 - 10px)}
-.band-1 #detalles{padding-top:calc(var(--bs)*.36)}
+.band-1 #detalles{padding-top:calc(var(--bs)*.36 + 1.5vw)}
 .band-2{margin-bottom:calc(var(--bs)*.66 + 16px)}
-.band-2 .rings-sec{padding-bottom:calc(var(--bs)*.98 + 2vw + 34px)}
 .verse-sec{padding:28px 26px}
-.gracias-sec{padding:30px 26px 0}
+.gracias-sec{padding:34px 26px calc(var(--bs)*.62 + 14px)}
+.verse-sec .wrap{max-width:560px}
+.verse-sec .verse p{font-size:clamp(25px,6.6vw,31px);line-height:1.38}
+.rings-sec{margin-top:-10px}
 .dark-band .kicker{color:var(--lilac)}
 .dark-band .title{color:#f3ead8}
 .dark-band .detail h3{color:#f3ead8}
 .dark-band .detail p{color:#cfc3df}
+/* Programa del día */
+.agenda{display:flex;align-items:center;justify-content:center;gap:clamp(18px,6vw,34px);margin:30px auto 26px}
+.ag-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ag-time{font-family:var(--serif);font-weight:500;font-size:clamp(34px,10vw,44px);line-height:1;color:#f3ead8}
+.ag-time small{font-size:.42em;font-style:italic;font-weight:400;color:#e3cf9f;margin-left:2px}
+.ag-name{font-family:"Cinzel",var(--serif);font-size:12px;letter-spacing:.22em;margin-right:-.22em;text-transform:uppercase;color:var(--lilac)}
+.ag-sep{width:1px;height:64px;background:linear-gradient(transparent,#d3bb8e,transparent)}
+.agenda-text{font-family:var(--serif);font-size:19px;line-height:1.55;color:#cfc3df;max-width:360px;margin:0 auto}
 .dark-band .detail .ico{color:#e9d3a4;background:linear-gradient(#22173a,#22173a) padding-box,linear-gradient(135deg,#d3bb8e,#8c6fb8) border-box}
-.dark-band .rings-sec{padding-bottom:6px}
 
 /* --- Guardar --- */
 .save-sec{padding-top:0;padding-bottom:22px}
@@ -437,7 +446,7 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
         <span class="fn2">Keylin Yoanna Pérez Alfaro</span>
       </p>
       <div class="ornament reveal" style="--d:.3s"><i></i></div>
-      <p class="invite reveal" style="--d:.4s">Tenemos el honor de invitarles a celebrar nuestra unión en matrimonio civil y el comienzo de nuestra vida juntos.</p>
+      <p class="invite reveal" style="--d:.4s">Tenemos el honor de invitarles a celebrar nuestra unión en matrimonio y el comienzo de nuestra vida juntos.</p>
     </div>
   </section>
 
@@ -470,11 +479,10 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
       <p class="year reveal" style="--d:.2s">2026</p>
       <div class="time reveal" style="--d:.3s">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2.2" stroke-linecap="round"/></svg>
-        <strong>12:00 p.m.</strong><span>Almuerzo</span>
+        <strong>10:30 a.m.</strong><span>Ceremonia</span>
       </div>
 
       <div class="cal reveal" id="cal">
-        <svg class="cal-clip" viewBox="0 0 30 64" aria-hidden="true"><defs><linearGradient id="clipG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4ede0"/><stop offset=".5" stop-color="#b9b3c4"/><stop offset="1" stop-color="#e9e2d4"/></linearGradient></defs><path d="M9 14V50a6 6 0 0 0 12 0V8a5 5 0 0 0-10 0v40a2.5 2.5 0 0 0 5 0V14" fill="none" stroke="url(#clipG)" stroke-width="2.1" stroke-linecap="round"/></svg>
         <p class="cal-head" aria-label="Noviembre 2026"><span class="mes">NOVIEMBRE</span><svg class="aros" viewBox="0 0 44 24" aria-hidden="true"><g fill="none" stroke="#e3cf9f" stroke-width="1.1"><ellipse cx="16" cy="13" rx="11" ry="7.5" transform="rotate(-8 16 13)"/><ellipse cx="16" cy="13" rx="8.6" ry="5.4" transform="rotate(-8 16 13)" stroke-opacity=".55"/><ellipse cx="28" cy="12" rx="11" ry="7.5" transform="rotate(8 28 12)"/><ellipse cx="28" cy="12" rx="8.6" ry="5.4" transform="rotate(8 28 12)" stroke-opacity=".55"/></g><path d="M33 3.2l1.6-1.8 1.6 1.8-1.6 1.6z" fill="#f3ead8"/></svg><span class="anio">2026</span></p>
         <div class="cal-grid" id="calGrid"></div>
       </div>
@@ -534,15 +542,13 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
   <!-- ====== DETALLES ====== -->
   <section id="detalles">
     <div class="wrap">
-      <p class="kicker reveal">Con cariño</p>
-      <h2 class="title reveal">Algunos detalles</h2>
-      <div class="details">
-        <div class="detail reveal">
-          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 3v7a3 3 0 0 1-3 3M5 3v18M16 3c-2 0-3 3-3 6s1 4 3 4v8" stroke-linecap="round"/></svg></div>
-          <h3>Recepción</h3>
-          <p>Después de la ceremonia civil celebraremos juntos con un almuerzo, a partir de las 12:00 del mediodía. Les pedimos llegar con algunos minutos de anticipación.</p>
-        </div>
+      <h2 class="title reveal">Así será nuestro día</h2>
+      <div class="agenda reveal" style="--d:.15s">
+        <div class="ag-item"><span class="ag-time">10:30 <small>a.m.</small></span><span class="ag-name">Ceremonia</span></div>
+        <span class="ag-sep" aria-hidden="true"></span>
+        <div class="ag-item"><span class="ag-time">12:00 <small>p.m.</small></span><span class="ag-name">Almuerzo</span></div>
       </div>
+      <p class="agenda-text reveal" style="--d:.25s">La ceremonia dará comienzo a las 10:30 de la mañana y, al terminar, los esperamos para compartir un almuerzo a partir de las 12:00 del mediodía.</p>
     </div>
   </section>
 
@@ -553,22 +559,8 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
   <section class="verse-sec">
     <div class="wrap">
       <div class="detail verse reveal">
-          <p>“Cordón de tres dobleces no se rompe pronto.”</p>
-          <cite>Eclesiastés 4:12</cite>
-        </div>
-    </div>
-  </section>
-
-  <!-- ====== BANDA MORADA 2: gracias + anillos ====== -->
-  <div class="dark-band band-2">
-    <div class="tear tear-top" aria-hidden="true"></div>
-
-  <section class="gracias-sec">
-    <div class="wrap">
-      <div class="detail reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/></svg></div>
-          <h3>Gracias</h3>
-          <p>Ustedes son parte de nuestra historia. Su presencia es el regalo más bonito que podemos recibir en este día.</p>
+          <p>“Que el amor que hoy celebramos sea como un sello en nuestros corazones: firme, profundo y lleno de vida. Que cada amanecer nos recuerde la belleza de caminar juntos, y que cada momento compartido sea un testimonio de la fuerza y la dulzura del amor que nos eligió para siempre.”</p>
+          <cite>Cantares 8:6</cite>
         </div>
     </div>
   </section>
@@ -582,6 +574,18 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
     </div>
   </section>
 
+  <!-- ====== BANDA MORADA 2: mensaje para los invitados ====== -->
+  <div class="dark-band band-2">
+    <div class="tear tear-top" aria-hidden="true"></div>
+
+  <section class="gracias-sec">
+    <div class="wrap">
+      <div class="detail reveal">
+          <h3>Un día para compartir</h3>
+          <p>Quisimos celebrar este día en un ambiente íntimo, rodeados de quienes han sido parte de nuestra historia, y por eso esta invitación es especialmente para ustedes. Nos hará muy felices tenerlos cerca, y cada muestra de cariño con la que quieran acompañarnos hará este día aún más especial.</p>
+        </div>
+    </div>
+  </section>
     <div class="tear tear-bottom" aria-hidden="true"></div>
     <div class="band-petals bottom" aria-hidden="true"><div class="q-art" data-shape="3"></div></div>
   </div>
@@ -616,7 +620,6 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
   <svg class="note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
   <svg class="slash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16"/></svg>
   <span class="sr" id="musicLabel">Activar música</span>
-  <span class="music-caption" aria-hidden="true">Nuestra melodía</span>
 </button>
 
 <!-- Modal de respaldo para guardar imagen -->
@@ -643,7 +646,7 @@ const CONFIG = {
   musica: "musica-boda.mp3",                      // Archivo de música junto a index.html
   fotoLugar: "",   // opcional: "lugar.jpg" para mostrar foto del lugar en el arco
   fotoPareja: "",  // la foto de los novios ya va incluida dentro del index; pon "pareja.jpg" solo si quieres cambiarla por otro archivo
-  fecha: "2026-11-08T12:00:00-06:00",        // hora de Guatemala
+  fecha: "2026-11-08T10:30:00-06:00",        // hora de Guatemala
   fin:   "2026-11-08T17:00:00-06:00"
 };
 /* ========================================================= */
@@ -698,7 +701,7 @@ $('#qPhotoImg').addEventListener('error', () => { $('#qPhoto').hidden = true; })
 const gcal = new URL('https://calendar.google.com/calendar/render');
 const toZ = d => new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
 gcal.search = new URLSearchParams({
-  action:'TEMPLATE', text:'Boda civil de Raúl y Keylin',
+  action:'TEMPLATE', text:'Boda de Raúl y Keylin',
   dates:`${toZ(CONFIG.fecha)}/${toZ(CONFIG.fin)}`,
   details:'¡Les esperamos para celebrar juntos!', location:`${CONFIG.lugar}, ${CONFIG.direccion}`
 }).toString();
@@ -1097,6 +1100,11 @@ let opened = false;
 function openInvitation(){
   if (opened) return; opened = true;
   playMusic();                       // dentro del toque: permitido en iPhone y Android
+  // Pantalla completa (oculta la barra de la dirección) en teléfonos Android; iPhone no lo permite
+  const de = document.documentElement;
+  if (matchMedia('(pointer: coarse)').matches && de.requestFullscreen && !/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    try { const p = de.requestFullscreen({ navigationUI: 'hide' }); if (p && p.catch) p.catch(() => {}); } catch(e) {}
+  }
   intro.classList.add('open');
   window.scrollTo(0,0);
   const t = reduced ? [300, 500, 1300] : [1150, 1500, 2800];
@@ -1365,7 +1373,7 @@ async function buildImage(){
   x.fillStyle = '#6b4f9f'; x.fillText('Keylin Yoanna Pérez Alfaro', C, 1092);
 
   x.fillStyle = '#2c2b36'; x.font = `400 35px ${SERIF}`;
-  wrap(x, 'Tenemos el honor de invitarles a celebrar nuestra unión en matrimonio civil', C, 1166, 800, 46);
+  wrap(x, 'Tenemos el honor de invitarles a celebrar nuestra unión en matrimonio', C, 1166, 800, 46);
 
   x.strokeStyle = '#d3bb8e'; x.lineWidth = 1.5;
   [[170,410],[670,910]].forEach(([a,b]) => { x.beginPath(); x.moveTo(a,1262); x.lineTo(b,1262); x.moveTo(a,1332); x.lineTo(b,1332); x.stroke(); });
@@ -1375,8 +1383,8 @@ async function buildImage(){
   x.fillStyle = g; x.font = `500 160px ${SERIF}`; x.fillText('08', C, 1354);
   x.fillStyle = '#a8854f'; x.font = `400 36px ${SERIF}`; spaced(x, '2026', C, 1420, 18);
 
-  x.fillStyle = '#1f2b55'; x.font = `500 42px ${SERIF}`; x.fillText('12:00 p.m.', C, 1488);
-  x.fillStyle = '#5f5b6c'; x.font = `italic 400 33px ${SERIF}`; x.fillText('Almuerzo', C, 1530);
+  x.fillStyle = '#1f2b55'; x.font = `500 42px ${SERIF}`; x.fillText('10:30 a.m.', C, 1488);
+  x.fillStyle = '#5f5b6c'; x.font = `italic 400 33px ${SERIF}`; x.fillText('Ceremonia · Almuerzo 12:00', C, 1530);
   x.strokeStyle = 'rgba(168,133,79,.6)'; x.beginPath(); x.moveTo(480,1564); x.lineTo(600,1564); x.stroke();
 
   x.fillStyle = '#1f2b55'; x.font = `500 46px ${SERIF}`;
