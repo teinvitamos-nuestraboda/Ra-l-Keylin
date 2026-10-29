@@ -335,6 +335,12 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
   border:1px solid rgba(168,133,79,.25);box-shadow:0 5px 12px rgba(20,24,50,.09);pointer-events:none}
 .music[hidden]{display:none}
 
+/* --- Aviso breve al guardar --- */
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  max-width:calc(100% - 40px);padding:12px 20px;border-radius:999px;font:500 14px var(--sans);color:#fff;text-align:center;
+  background:linear-gradient(135deg,var(--navy),var(--purple));box-shadow:0 12px 26px -12px rgba(20,24,50,.6);transition:opacity .35s,transform .35s var(--ease)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
 /* --- Modal imagen (respaldo para iPhone) --- */
 .modal{position:fixed;inset:0;z-index:60;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;
   padding:calc(env(safe-area-inset-top,0px) + 20px) 20px calc(env(safe-area-inset-bottom,0px) + 20px);background:rgba(20,27,56,.88);text-align:center;color:#f3ead8}
@@ -631,13 +637,12 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
 <!-- Modal de respaldo para guardar imagen -->
 <div class="modal" id="modal" role="dialog" aria-label="Guardar invitación">
   <img id="modalImg" alt="Invitación de boda de Raúl y Keylin">
-  <p>Mantén presionada la imagen y elige “Guardar imagen” o “Descargar imagen”.</p>
+  <p>Mantén presionada la imagen y elige “Guardar imagen” o “Descargar imagen” para tenerla en tu galería.</p>
   <button class="btn btn-ghost" id="modalClose">Cerrar</button>
 </div>
 
 <canvas id="fall" aria-hidden="true"></canvas>
-<audio id="bgm" loop preload="auto"></audio>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<audio id="bgm" loop preload="none"></audio>
 
 
 <script>
@@ -1132,7 +1137,9 @@ function startFalling(){
   const size = () => { dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
     cv.width = W*dpr; cv.height = H*dpr; x.setTransform(dpr,0,0,dpr,0,0); rectsAt = 0; };
   size(); addEventListener('resize', size);
-  const target = () => Math.round(Math.min(16, Math.max(8, W*(H+2*M)/60000)));
+  const lite = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 3 ||
+               (navigator.connection && navigator.connection.saveData);
+  const target = () => { const n = Math.round(Math.min(16, Math.max(8, W*(H+2*M)/60000))); return lite ? Math.max(4, Math.round(n*.45)) : n; };
   const make = (y0, y1) => { const L = 13+Math.random()*9, c = COLORS[Math.random()*COLORS.length|0];
     return { L, c, d: new Path2D(petalShape(Math.random, L, L*(.52+Math.random()*.16), (Math.random()-.5)*.45)),
       x: Math.random()*W, y: y0 + Math.random()*(y1-y0),          // y en coordenadas de la página
@@ -1186,10 +1193,9 @@ function startReveals(){
 /* ---------- Anillos de oro entrelazados (3D) ----------
    Dos argollas iguales: media banda con grabado en espiga (corte diamante),
    una ranura fina y la otra media banda pulida. Giran despacio en su lugar. */
-(function(){
+function initRings(){
   const cv = $('#ringsCanvas'), sec = $('#anillos');
-  if (!cv) return;
-  if (!window.THREE) { sec.hidden = true; return; }
+  if (!cv || !window.THREE) { if (sec) sec.hidden = true; return; }
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true }); }
   catch(e) { sec.hidden = true; return; }
@@ -1296,6 +1302,19 @@ function startReveals(){
   new IntersectionObserver(es => { const was = visible; visible = es[0].isIntersecting;
     if (visible && !was){ size(); last = performance.now(); requestAnimationFrame(draw); } }, { rootMargin: '120px' }).observe(cv);
   requestAnimationFrame(draw);
+}
+// La librería 3D (unos 600 KB) se descarga solo cuando el invitado se va acercando a los anillos
+(function(){
+  const sec = $('#anillos'); if (!sec) return;
+  let started = false;
+  const load = () => { if (started) return; started = true;
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.onload = initRings; s.onerror = () => { sec.hidden = true; };
+    document.head.appendChild(s); };
+  if (!('IntersectionObserver' in window)) { load(); return; }
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '1200px 0px' });
+  io.observe(sec);
 })();
 
 /* ---------- Imagen descargable (1080 × 1920) ---------- */
@@ -1417,20 +1436,30 @@ function prepareImage(){
 function showModal(){ $('#modalImg').src = imgUrl; $('#modal').classList.add('show'); }
 $('#modalClose').addEventListener('click', () => $('#modal').classList.remove('show'));
 
+function toast(msg){
+  let t = $('#toast'); if (!t){ t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role','status'); document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 3200);
+}
 $('#btnSave').addEventListener('click', async () => {
   const btn = $('#btnSave'), label = $('#btnSaveLabel'), txt = label.textContent;
-  const coarse = matchMedia('(pointer: coarse)').matches;
+  const ua = navigator.userAgent;
+  const iOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const inApp = /FBAN|FBAV|Instagram|Line\/|TikTok|Snapchat/i.test(ua);      // navegadores dentro de otras apps
   if (!imgBlob) { btn.disabled = true; label.textContent = 'Preparando…'; await prepareImage(); btn.disabled = false; label.textContent = txt; }
-  const file = new File([imgBlob], FILE_NAME, { type: 'image/jpeg' });
-
-  if (coarse && navigator.canShare && navigator.canShare({ files: [file] })) {
-    try { await navigator.share({ files: [file], title: 'Invitación de boda · Raúl y Keylin' }); }
-    catch (e) { if (e.name !== 'AbortError') showModal(); }
+  // Dentro de Facebook/Instagram no se puede descargar: mostramos la imagen para mantenerla presionada
+  if (inApp) { showModal(); return; }
+  // iPhone: la hoja de compartir trae "Guardar imagen", que la manda directo a Fotos
+  if (iOS) {
+    const file = new File([imgBlob], FILE_NAME, { type: 'image/jpeg' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file] }); } catch (e) { if (e.name !== 'AbortError') showModal(); }
+    } else showModal();
     return;
   }
+  // Android y computadora: se descarga directo (en Android queda en Descargas y aparece en la galería)
   const a = document.createElement('a'); a.href = imgUrl; a.download = FILE_NAME;
   document.body.appendChild(a); a.click(); a.remove();
-  if (coarse) showModal();
+  toast('Listo, la invitación se guardó en tu teléfono');
 });
 </script>
 </body>
