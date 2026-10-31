@@ -141,16 +141,13 @@ section{position:relative;padding:64px 26px;text-align:center}
 .invite-sec .s1{left:2px;top:4px}
 .invite-sec .s2{right:6px;bottom:6px;transform:rotate(180deg)}
 .invite-sec .lead{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink-soft);max-width:300px;margin:0 auto}
-/* Padres de los novios */
-.parents{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:14px;margin:24px auto 4px;max-width:440px}
-.pa-label{font-family:"Cinzel",var(--serif);font-size:10.5px;letter-spacing:.2em;margin-right:-.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.pa-names{font-family:var(--serif);font-size:17px;line-height:1.35;color:var(--ink);margin-top:3px}
-.pa-sep{width:1px;align-self:stretch;background:linear-gradient(transparent,var(--gold-l),transparent)}
-@media (max-width:520px){.parents{grid-template-columns:1fr;gap:14px;margin-top:20px}.pa-sep{width:46px;height:1px;justify-self:center;background:linear-gradient(90deg,transparent,var(--gold-l),transparent)}.pa-names{font-size:18px;margin-top:2px}}
 .fullnames{margin:26px 0 4px;font-family:var(--serif);font-weight:500;font-size:clamp(23px,6.5vw,34px);line-height:1.2}
 .fullnames span{display:block}
 .fullnames .fn1{color:var(--navy)} .fullnames .fn2{color:var(--purple)}
-.fullnames .amp{font-family:var(--script);font-weight:400;font-size:1.4em;color:var(--gold);line-height:1.1}
+/* Padres, debajo del nombre de cada novio */
+.fullnames .fn-parents{display:block;margin:8px auto 0;font-size:clamp(15px,4.3vw,17px);font-style:italic;font-weight:400;line-height:1.5;color:var(--ink-soft)}
+.fullnames .fn-parents em{font-family:var(--script);font-style:normal;font-size:1.45em;color:var(--gold);margin-right:.2em;line-height:1}
+.fullnames .amp{font-family:var(--script);font-weight:400;font-size:1.4em;color:var(--gold);line-height:1.1;margin:10px 0 4px}
 .invite-sec .invite{font-family:var(--serif);font-size:21px;line-height:1.5;color:var(--ink);max-width:340px;margin:0 auto}
 
 /* --- Frase con foto: fondo morado oscuro enmarcado por pétalos (sin cortes) ---
@@ -458,23 +455,12 @@ footer p{font-family:var(--serif);font-size:18px;color:#d9d0e6;margin-top:6px;te
   <section class="invite-sec" id="invitacion">
     <div class="wrap">
       <p class="lead reveal">Con la bendición de Dios y el amor de nuestros padres</p>
-      <div class="parents reveal" style="--d:.1s">
-        <div class="pa">
-          <p class="pa-label">Padres del novio</p>
-          <p class="pa-names">Carlos Raúl Sierra Pacay</p>
-          <p class="pa-names">Delmy Leticia Chinchilla Martínez</p>
-        </div>
-        <span class="pa-sep" aria-hidden="true"></span>
-        <div class="pa">
-          <p class="pa-label">Padres de la novia</p>
-          <p class="pa-names">Juan Alberto Pérez Sac</p>
-          <p class="pa-names">Ingrid Maricel Alfaro Bac</p>
-        </div>
-      </div>
       <p class="fullnames reveal" style="--d:.15s">
         <span class="fn1">Raúl Gerardo Sierra Chinchilla</span>
+        <span class="fn-parents"><em>hijo de</em> Carlos Raúl Sierra Pacay<br>y Delmy Leticia Chinchilla Martínez</span>
         <span class="amp">&amp;</span>
         <span class="fn2">Keylin Yoanna Pérez Alfaro</span>
+        <span class="fn-parents"><em>hija de</em> Juan Alberto Pérez Sac<br>e Ingrid Maricel Alfaro Bac</span>
       </p>
       <div class="ornament reveal" style="--d:.3s"><i></i></div>
       <p class="invite reveal" style="--d:.4s">Tenemos el honor de invitarles a celebrar nuestra unión en matrimonio y el comienzo de nuestra vida juntos.</p>
